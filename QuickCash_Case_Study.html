@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickCash — UX Case Study | Bala</title>
+<meta name="description" content="QuickCash UX/UI case study — a UPI-powered cardless ATM withdrawal experience.">
+<style>
+:root{
+  --bg:#f5f5f3; --surface:#fff; --ink:#111; --muted:#686868;
+  --line:#d9d9d4; --accent:#111; --soft:#ecece8; --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+a{color:inherit}
+.container{width:min(var(--max),calc(100% - 48px));margin:auto}
+nav{position:sticky;top:0;z-index:20;background:rgba(245,245,243,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-inner{height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;letter-spacing:-.04em}
+.nav-links{display:flex;gap:24px;font-size:13px}
+.nav-links a{text-decoration:none;color:var(--muted)}
+.hero{padding:100px 0 72px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-weight:700}
+h1{font-size:clamp(54px,9vw,116px);line-height:.9;letter-spacing:-.075em;margin:24px 0 32px;max-width:1050px}
+.hero p{font-size:21px;max-width:720px;color:#454545}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:64px}
+.meta div{padding:20px 20px 0 0;border-right:1px solid var(--line)}
+.meta div:last-child{border-right:0}
+.meta b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:7px}
+.meta span{font-weight:650}
+.btn{display:inline-flex;align-items:center;gap:10px;background:#111;color:white;text-decoration:none;padding:13px 18px;border-radius:999px;margin-top:28px;font-size:14px}
+section{padding:100px 0;border-bottom:1px solid var(--line)}
+.section-grid{display:grid;grid-template-columns:280px 1fr;gap:70px}
+.section-label{font-size:13px;text-transform:uppercase;letter-spacing:.14em;font-weight:800}
+h2{font-size:clamp(38px,5vw,64px);line-height:1;letter-spacing:-.055em;margin:0 0 28px}
+h3{font-size:24px;letter-spacing:-.03em;margin:0 0 10px}
+p{margin:0 0 18px;color:#444}
+.lead{font-size:22px;color:#222;max-width:850px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+.card{background:var(--surface);border:1px solid var(--line);padding:28px;min-height:190px}
+.card .num{font-size:12px;color:var(--muted);margin-bottom:50px}
+.problem{background:#111;color:#fff}
+.problem p{color:#cfcfcb}
+.problem .section-label{color:#aaa}
+.problem h2{max-width:800px}
+.flow{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.step{padding:13px 16px;background:var(--surface);border:1px solid var(--line);border-radius:8px;font-size:14px}
+.arrow{padding:13px 0;color:var(--muted)}
+.screen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:42px}
+.screen{background:#e8e8e3;border:1px solid var(--line);aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#777;font-size:13px}
+.screen small{display:block;margin-top:8px}
+.insight{border-left:2px solid #111;padding-left:22px;margin:32px 0}
+.quote{font-size:30px;line-height:1.15;letter-spacing:-.04em;max-width:850px}
+.outcome{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.outcome .card{min-height:auto}
+footer{padding:70px 0}
+footer h2{max-width:700px}
+@media(max-width:800px){
+ .container{width:min(var(--max),calc(100% - 28px))}
+ .nav-links{display:none}
+ .hero{padding:70px 0 55px}
+ .meta{grid-template-columns:1fr 1fr;gap:25px}
+ .meta div{border-right:0}
+ .section-grid{grid-template-columns:1fr;gap:28px}
+ .cards,.screen-grid,.outcome{grid-template-columns:1fr}
+ section{padding:70px 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">BALA / QUICKCASH</div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#flow">Flow</a>
+      <a href="#screens">UI</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="eyebrow">UX / UI Case Study · 01</div>
+    <h1>QuickCash<br>Cardless cash.</h1>
+    <p>
+      A mobile-first ATM withdrawal experience that lets people withdraw cash
+      from nearby ATMs using their UPI app — without carrying a debit card.
+    </p>
+    <a class="btn" href="https://skilled-quick-cash-go.base44.app/" target="_blank" rel="noopener">View live prototype ↗</a>
+
+    <div class="meta">
+      <div><b>Role</b><span>UX / UI Designer</span></div>
+      <div><b>Focus</b><span>Product UX · Interaction · UI</span></div>
+      <div><b>Platform</b><span>Mobile experience</span></div>
+      <div><b>Tools</b><span>Figma · Prototyping · Base44</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="overview">
+  <div class="container section-grid">
+    <div class="section-label">01 / Overview</div>
+    <div>
+      <h2>Cash, without the card.</h2>
+      <p class="lead">
+        QuickCash explores a simple question: if people already use UPI on their
+        phones every day, can getting physical cash be just as effortless?
+      </p>
+      <p>
+        The concept connects the user's phone, a nearby ATM and a secure UPI
+        payment flow. The experience is intentionally broken into clear,
+        focused steps so the user always knows what happens next.
+      </p>
+
+      <div class="cards">
+        <div class="card"><div class="num">01</div><h3>Find</h3><p>Locate a nearby compatible ATM before starting the withdrawal.</p></div>
+        <div class="card"><div class="num">02</div><h3>Scan</h3><p>Use the ATM's QR interaction to connect the physical ATM with the phone.</p></div>
+        <div class="card"><div class="num">03</div><h3>Withdraw</h3><p>Select an amount, authenticate securely and receive a clear transaction result.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem" class="problem">
+  <div class="container section-grid">
+    <div class="section-label">02 / Problem</div>
+    <div>
+      <h2>What happens when your wallet is empty — but your phone isn't?</h2>
+      <p class="lead">
+        Traditional ATM withdrawal assumes the user has a physical debit card.
+        QuickCash removes that dependency and makes the phone the starting point.
+      </p>
+      <div class="insight">
+        <p><strong>Design challenge</strong></p>
+        <p>Design a cardless withdrawal flow that feels familiar, secure and fast — while bridging a digital UPI interaction with a physical ATM.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container section-grid">
+    <div class="section-label">03 / Design goals</div>
+    <div>
+      <h2>Make every step obvious.</h2>
+      <div class="cards">
+        <div class="card"><div class="num">GOAL 01</div><h3>Reduce friction</h3><p>Keep the withdrawal journey short and focused on the user's immediate task.</p></div>
+        <div class="card"><div class="num">GOAL 02</div><h3>Build confidence</h3><p>Use strong hierarchy, explicit states and familiar authentication patterns.</p></div>
+        <div class="card"><div class="num">GOAL 03</div><h3>Connect physical + digital</h3><p>Make the relationship between ATM, QR, UPI and transaction status easy to understand.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="container section-grid">
+    <div class="section-label">04 / User flow</div>
+    <div>
+      <h2>A linear path from ATM to cash.</h2>
+      <p class="lead">The prototype is structured around a simple sequence with explicit success and failure states.</p>
+      <div class="flow">
+        <div class="step">Home</div><div class="arrow">→</div>
+        <div class="step">ATM Locator</div><div class="arrow">→</div>
+        <div class="step">QR Scanner</div><div class="arrow">→</div>
+        <div class="step">Withdraw Amount</div><div class="arrow">→</div>
+        <div class="step">UPI PIN</div><div class="arrow">→</div>
+        <div class="step">Processing</div><div class="arrow">→</div>
+        <div class="step">Success / Failed</div><div class="arrow">→</div>
+        <div class="step">History</div>
+      </div>
+      <div class="insight">
+        <p><strong>Why this structure?</strong></p>
+        <p>Each screen represents one decision or system state. This reduces cognitive load and makes error recovery easier to design.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solution">
+  <div class="container section-grid">
+    <div class="section-label">05 / Solution</div>
+    <div>
+      <h2>The experience is built around three moments.</h2>
+      <div class="cards">
+        <div class="card"><div class="num">MOMENT 01</div><h3>Discover</h3><p>The user starts from a clear home experience and finds an ATM through the locator.</p></div>
+        <div class="card"><div class="num">MOMENT 02</div><h3>Authorize</h3><p>The QR and UPI PIN steps create a deliberate security checkpoint before cash is released.</p></div>
+        <div class="card"><div class="num">MOMENT 03</div><h3>Confirm</h3><p>Processing, success and failure states make the transaction outcome unambiguous.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="container section-grid">
+    <div class="section-label">06 / Interface</div>
+    <div>
+      <h2>From flow to interface.</h2>
+      <p class="lead">
+        The live prototype currently includes dedicated screens for the ATM
+        locator, QR scanner, amount selection, UPI PIN, processing, success,
+        failure and transaction history.
+      </p>
+
+      <!-- Replace these blocks with your exported Figma screenshots.
+           Example: <img class="real-screen" src="assets/home.png" alt="QuickCash Home"> -->
+      <div class="screen-grid">
+        <div class="screen">ADD SCREENSHOT<br><small>Home / Entry</small></div>
+        <div class="screen">ADD SCREENSHOT<br><small>ATM Locator</small></div>
+        <div class="screen">ADD SCREENSHOT<br><small>QR Scanner</small></div>
+        <div class="screen">ADD SCREENSHOT<br><small>Withdraw Amount</small></div>
+        <div class="screen">ADD SCREENSHOT<br><small>UPI PIN</small></div>
+        <div class="screen">ADD SCREENSHOT<br><small>Processing</small></div>
+        <div class="screen">ADD SCREENSHOT<br><small>Success</small></div>
+        <div class="screen">ADD SCREENSHOT<br><small>Failed</small></div>
+        <div class="screen">ADD SCREENSHOT<br><small>Transaction History</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container section-grid">
+    <div class="section-label">07 / Interaction thinking</div>
+    <div>
+      <h2>States are part of the UX.</h2>
+      <p class="lead">
+        A financial interaction cannot stop at the happy path. QuickCash
+        explicitly models processing, success and failure so the user can
+        understand whether money has actually been dispensed.
+      </p>
+      <div class="outcome">
+        <div class="card"><h3>Success state</h3><p>Clearly confirms completion and provides a natural path toward transaction history.</p></div>
+        <div class="card"><h3>Failure state</h3><p>Separates an unsuccessful transaction from the rest of the flow and gives the user a clear recovery direction.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container section-grid">
+    <div class="section-label">08 / Reflection</div>
+    <div>
+      <h2>Designing trust into a short interaction.</h2>
+      <p class="quote">
+        “The strongest part of the concept is not removing the card — it is
+        making every transition feel intentional enough that the user trusts
+        what is happening to their money.”
+      </p>
+      <p style="margin-top:30px">
+        This project helped explore the intersection of mobile UX, financial
+        interactions and physical-world touchpoints. The next iteration would
+        focus on usability testing, accessibility, real ATM constraints,
+        network failures and edge cases around transaction reconciliation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="eyebrow">Next case study</div>
+    <h2>Want to see how the system scales?</h2>
+    <p>Explore the live QuickCash prototype or replace the screenshot placeholders with your final Figma exports.</p>
+    <a class="btn" href="https://skilled-quick-cash-go.base44.app/" target="_blank" rel="noopener">Open QuickCash ↗</a>
+  </div>
+</footer>
+
+</body>
+</html>
