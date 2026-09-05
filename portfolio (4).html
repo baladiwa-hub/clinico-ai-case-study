@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>UX/UI Designer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  /* ============================================================
+     CSS CUSTOM PROPERTIES — DESIGN TOKENS
+     ============================================================ */
+  :root {
+    --c-bg:        #F7F6F2;
+    --c-surface:   #FFFFFF;
+    --c-border:    #E5E3DC;
+    --c-text:      #1A1916;
+    --c-muted:     #7A7870;
+    --c-accent:    #2D5BE3;
+    --c-accent-2:  #E8521A;
+    --c-tag-bg:    #EEECEA;
+    --c-tag-text:  #3D3B36;
+
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+
+    --radius-sm:  6px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+    --radius-xl:  32px;
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+    --nav-h: 72px;
+  }
+
+  [data-theme="dark"] {
+    --c-bg:        #111110;
+    --c-surface:   #1C1B19;
+    --c-border:    #2E2D2A;
+    --c-text:      #F0EEE8;
+    --c-muted:     #8A8880;
+    --c-accent:    #5B82FF;
+    --c-accent-2:  #FF7048;
+    --c-tag-bg:    #252420;
+    --c-tag-text:  #C8C6BE;
+  }
+
+  /* ============================================================
+     RESET & BASE
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: var(--font-body);
+    background: var(--c-bg);
+    color: var(--c-text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  ul { list-style: none; }
+  button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+  /* ============================================================
+     TYPOGRAPHY SCALE
+     ============================================================ */
+  .t-hero   { font-family: var(--font-display); font-size: clamp(3rem,7vw,6.5rem); line-height: 1.03; letter-spacing: -0.02em; }
+  .t-h1     { font-family: var(--font-display); font-size: clamp(2rem,4vw,3.5rem); line-height: 1.1; letter-spacing: -0.015em; }
+  .t-h2     { font-family: var(--font-display); font-size: clamp(1.5rem,3vw,2.5rem); line-height: 1.2; letter-spacing: -0.01em; }
+  .t-h3     { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.3; }
+  .t-label  { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-muted); }
+  .t-body   { font-size: 1rem; font-weight: 400; }
+  .t-lead   { font-size: 1.125rem; font-weight: 300; line-height: 1.7; color: var(--c-muted); }
+
+  /* ============================================================
+     LAYOUT UTILITIES
+     ============================================================ */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); }
+  .section   { padding: clamp(5rem, 10vw, 9rem) 0; }
+  .grid-2    { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .grid-3    { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+  .flex-between { display: flex; justify-content: space-between; align-items: center; }
+  .sr-only { position: absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center;
+    background: rgba(247,246,242,0.82);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--c-border);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  [data-theme="dark"] nav { background: rgba(17,17,16,0.82); }
+  .nav-inner {
+    width: 100%; max-width: 1200px;
+    margin: 0 auto; padding: 0 clamp(1.5rem,5vw,4rem);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.15rem; letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--c-accent); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-size: 0.875rem; font-weight: 500; color: var(--c-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--c-text); }
+  .nav-cta {
+    padding: 0.5rem 1.25rem;
+    background: var(--c-text); color: var(--c-bg);
+    border-radius: 100px; font-size: 0.875rem; font-weight: 500;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+  .theme-toggle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--c-border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--c-muted); font-size: 1rem;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .theme-toggle:hover { background: var(--c-tag-bg); color: var(--c-text); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+  .hamburger span { width: 22px; height: 2px; background: var(--c-text); border-radius: 2px; transition: all 0.3s; display: block; }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  #hero {
+    min-height: 100svh;
+    padding-top: var(--nav-h);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-noise {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: 
+      linear-gradient(var(--c-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--c-border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.35;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    background: var(--c-tag-bg);
+    border: 1px solid var(--c-border);
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s var(--ease-out) 0.1s both;
+  }
+  .hero-eyebrow-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+    50% { box-shadow: 0 0 0 5px rgba(34,197,94,0.1); }
+  }
+  .hero-headline {
+    animation: fadeUp 0.8s var(--ease-out) 0.2s both;
+    max-width: 900px;
+  }
+  .hero-headline em {
+    font-style: italic; color: var(--c-accent);
+  }
+  .hero-tagline {
+    margin-top: 1.5rem;
+    max-width: 520px;
+    animation: fadeUp 0.8s var(--ease-out) 0.3s both;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    margin-top: 2.5rem;
+    animation: fadeUp 0.8s var(--ease-out) 0.4s both;
+  }
+  .btn-primary {
+    padding: 0.875rem 2rem;
+    background: var(--c-text); color: var(--c-bg);
+    border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .btn-secondary {
+    padding: 0.875rem 2rem;
+    background: transparent; color: var(--c-text);
+    border: 1.5px solid var(--c-border); border-radius: 100px;
+    font-size: 0.9rem; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: border-color 0.2s, background 0.2s, transform 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--c-text); background: var(--c-tag-bg); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--c-border);
+    animation: fadeUp 0.8s var(--ease-out) 0.5s both;
+  }
+  .stat-num { font-family: var(--font-display); font-size: 2.25rem; line-height: 1; }
+  .stat-label { font-size: 0.8rem; color: var(--c-muted); margin-top: 0.3rem; }
+
+  /* ============================================================
+     SECTION HEADER
+     ============================================================ */
+  .section-header {
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: end; gap: 2rem;
+  }
+  .section-header-text {}
+  .section-label { margin-bottom: 0.75rem; }
+  .section-header-link {
+    font-size: 0.875rem; font-weight: 500; color: var(--c-accent);
+    display: flex; align-items: center; gap: 0.4rem;
+    white-space: nowrap; padding-bottom: 0.3rem;
+    transition: gap 0.2s;
+  }
+  .section-header-link:hover { gap: 0.65rem; }
+
+  /* ============================================================
+     ABOUT
+     ============================================================ */
+  #about { background: var(--c-surface); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start;
+  }
+  .about-portrait {
+    aspect-ratio: 4/5;
+    background: var(--c-tag-bg);
+    border-radius: var(--radius-xl);
+    position: relative; overflow: hidden;
+    border: 1px solid var(--c-border);
+  }
+  .portrait-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem; color: var(--c-muted);
+  }
+  .portrait-placeholder svg { width: 64px; height: 64px; opacity: 0.4; }
+  .portrait-placeholder span { font-size: 0.8rem; }
+  .about-portrait-badge {
+    position: absolute; bottom: 1.5rem; left: 1.5rem;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .badge-icon { font-size: 1.5rem; }
+  .badge-text { font-size: 0.75rem; }
+  .badge-text strong { display: block; font-size: 0.9rem; color: var(--c-text); }
+  .about-body { padding-top: 0.5rem; }
+  .about-body p { margin-bottom: 1.25rem; line-height: 1.75; }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.5rem; margin-top: 2rem;
+  }
+  .skill-chip {
+    padding: 0.55rem 0.9rem;
+    background: var(--c-tag-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem; font-weight: 500; color: var(--c-tag-text);
+    text-align: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .skill-chip:hover { background: var(--c-accent); color: white; border-color: var(--c-accent); transform: translateY(-2px); }
+
+  /* ============================================================
+     PROJECTS
+     ============================================================ */
+  .projects-list { display: flex; flex-direction: column; gap: 2px; }
+  .project-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+  .project-inner {
+    display: grid; grid-template-columns: 1fr 1.2fr;
+    min-height: 360px;
+  }
+  .project-card:nth-child(even) .project-inner { direction: rtl; }
+  .project-card:nth-child(even) .project-info,
+  .project-card:nth-child(even) .project-visual { direction: ltr; }
+  .project-info {
+    padding: clamp(2rem, 4vw, 3.5rem);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .project-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .tag {
+    padding: 0.3rem 0.75rem;
+    background: var(--c-tag-bg);
+    border: 1px solid var(--c-border);
+    border-radius: 100px;
+    font-size: 0.72rem; font-weight: 500; color: var(--c-tag-text);
+    letter-spacing: 0.02em;
+  }
+  .project-title { margin-bottom: 1rem; }
+  .project-problem {
+    font-size: 0.9rem; color: var(--c-muted); line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .project-process { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .process-step {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--c-muted);
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .process-step::after { content: '→'; opacity: 0.4; }
+  .process-step:last-child::after { display: none; }
+  .project-outcome {
+    display: flex; gap: 1.5rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--c-border);
+  }
+  .outcome-stat .num { font-family: var(--font-display); font-size: 1.5rem; color: var(--c-accent); }
+  .outcome-stat .desc { font-size: 0.75rem; color: var(--c-muted); margin-top: 0.2rem; }
+  .project-link-btn {
+    margin-top: 1.75rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--c-text); color: var(--c-bg);
+    border-radius: 100px; font-size: 0.85rem; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 0.5rem; align-self: flex-start;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .project-link-btn:hover { opacity: 0.8; transform: translateX(3px); }
+  .project-visual {
+    position: relative; overflow: hidden;
+    background: var(--c-tag-bg);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .project-visual-inner {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .mockup-screen {
+    width: 85%; max-width: 320px;
+    background: var(--c-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--c-border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    overflow: hidden;
+    transform: perspective(800px) rotateY(-4deg) rotateX(2deg);
+    transition: transform 0.4s var(--ease-out);
+  }
+  .project-card:hover .mockup-screen { transform: perspective(800px) rotateY(0deg) rotateX(0deg); }
+  .mockup-bar {
+    height: 36px; background: var(--c-tag-bg);
+    border-bottom: 1px solid var(--c-border);
+    display: flex; align-items: center; padding: 0 1rem; gap: 6px;
+  }
+  .mockup-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .mockup-content { padding: 1.25rem; }
+  .mockup-row { height: 10px; background: var(--c-border); border-radius: 4px; margin-bottom: 8px; }
+  .mockup-row.w-60 { width: 60%; }
+  .mockup-row.w-80 { width: 80%; }
+  .mockup-row.w-40 { width: 40%; }
+  .mockup-chart { height: 80px; background: var(--c-tag-bg); border-radius: var(--radius-sm); margin: 0.75rem 0; position: relative; overflow: hidden; }
+  .mockup-chart-bars { display: flex; align-items: flex-end; gap: 4px; padding: 8px; height: 100%; }
+  .chart-bar { flex: 1; border-radius: 3px 3px 0 0; }
+  .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .mockup-card-sm { height: 36px; background: var(--c-tag-bg); border-radius: var(--radius-sm); }
+
+  /* project color accents */
+  .p-esop   .project-visual { background: linear-gradient(135deg, #EDF2FF 0%, #E8ECFF 100%); }
+  .p-upi    .project-visual { background: linear-gradient(135deg, #FFF4ED 0%, #FFE8D9 100%); }
+  .p-school .project-visual { background: linear-gradient(135deg, #EFFAF5 0%, #DCFAED 100%); }
+  [data-theme="dark"] .p-esop   .project-visual { background: linear-gradient(135deg, #1a2040 0%, #1e2660 100%); }
+  [data-theme="dark"] .p-upi    .project-visual { background: linear-gradient(135deg, #2a1a10 0%, #3a2010 100%); }
+  [data-theme="dark"] .p-school .project-visual { background: linear-gradient(135deg, #102018 0%, #152e20 100%); }
+
+  /* ============================================================
+     CASE STUDY MODAL / PAGE TEMPLATE
+     ============================================================ */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 2rem 1rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s var(--ease-out);
+    overflow-y: auto;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    width: 100%; max-width: 860px;
+    background: var(--c-bg);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--c-border);
+    overflow: hidden;
+    transform: translateY(24px);
+    transition: transform 0.4s var(--ease-out);
+    box-shadow: 0 40px 120px rgba(0,0,0,0.18);
+    margin: auto;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-hero {
+    height: 280px; position: relative;
+    display: flex; align-items: flex-end; padding: 2rem;
+  }
+  .modal-close {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(0,0,0,0.2); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; transition: background 0.2s;
+  }
+  .modal-close:hover { background: rgba(0,0,0,0.4); }
+  .modal-body { padding: clamp(2rem, 5vw, 3.5rem); }
+  .cs-section { margin-bottom: 3rem; }
+  .cs-section-title {
+    font-family: var(--font-display); font-size: 1.35rem;
+    margin-bottom: 1rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .cs-meta-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border); border-radius: var(--radius-md);
+    padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .cs-meta-item label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-muted); margin-bottom: 0.4rem; }
+  .cs-meta-item span { font-size: 0.9rem; font-weight: 500; }
+  .cs-insight-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+  .cs-insight-item {
+    padding: 0.875rem 1.25rem;
+    background: var(--c-tag-bg); border-radius: var(--radius-sm);
+    font-size: 0.9rem; display: flex; align-items: flex-start; gap: 0.75rem;
+  }
+  .cs-insight-item::before { content: '→'; color: var(--c-accent); font-weight: 600; flex-shrink: 0; }
+  .persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  .persona-card {
+    background: var(--c-surface); border: 1px solid var(--c-border);
+    border-radius: var(--radius-md); padding: 1.25rem;
+  }
+  .persona-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--c-tag-bg); margin-bottom: 0.75rem;
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  }
+  .persona-name { font-weight: 600; margin-bottom: 0.25rem; }
+  .persona-role { font-size: 0.8rem; color: var(--c-muted); margin-bottom: 0.75rem; }
+  .persona-pain { font-size: 0.85rem; color: var(--c-muted); font-style: italic; }
+  .wireframe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+  .wireframe-ph {
+    aspect-ratio: 3/4;
+    background: var(--c-tag-bg); border: 1px dashed var(--c-border);
+    border-radius: var(--radius-md);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.5rem; color: var(--c-muted);
+  }
+  .wireframe-ph span { font-size: 0.75rem; text-align: center; padding: 0 0.5rem; }
+  .results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 1rem; }
+  .result-card {
+    background: var(--c-surface); border: 1px solid var(--c-border);
+    border-radius: var(--radius-md); padding: 1.25rem; text-align: center;
+  }
+  .result-num { font-family: var(--font-display); font-size: 2rem; color: var(--c-accent); }
+  .result-label { font-size: 0.8rem; color: var(--c-muted); margin-top: 0.3rem; }
+
+  /* ============================================================
+     SKILLS SECTION
+     ============================================================ */
+  #skills { background: var(--c-surface); }
+  .skills-categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .skill-category {
+    background: var(--c-bg); border: 1px solid var(--c-border);
+    border-radius: var(--radius-md); padding: 1.75rem;
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+  }
+  .skill-category:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
+  .skill-category-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .skill-category-name { font-weight: 600; margin-bottom: 1rem; }
+  .skill-items { display: flex; flex-direction: column; gap: 0.6rem; }
+  .skill-item { font-size: 0.875rem; color: var(--c-muted); display: flex; align-items: center; gap: 0.5rem; }
+  .skill-item::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--c-accent); flex-shrink: 0; }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  #contact { background: var(--c-text); color: var(--c-bg); }
+  #contact .t-label { color: rgba(255,255,255,0.4); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .contact-headline { font-family: var(--font-display); font-size: clamp(2rem,4vw,3.5rem); line-height: 1.1; letter-spacing: -0.015em; }
+  .contact-headline em { font-style: italic; color: var(--c-accent); }
+  .contact-sub { margin-top: 1.25rem; opacity: 0.6; max-width: 420px; }
+  .contact-actions { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-light {
+    padding: 0.875rem 2rem;
+    background: white; color: #1A1916;
+    border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: transform 0.25s var(--ease-out), opacity 0.2s;
+  }
+  .btn-light:hover { transform: translateY(-2px); opacity: 0.92; }
+  .btn-ghost-light {
+    padding: 0.875rem 2rem;
+    background: transparent; color: white;
+    border: 1.5px solid rgba(255,255,255,0.25); border-radius: 100px;
+    font-size: 0.9rem; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: border-color 0.2s, background 0.2s, transform 0.25s;
+  }
+  .btn-ghost-light:hover { border-color: white; background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+  .contact-links { display: flex; flex-direction: column; gap: 1.25rem; }
+  .contact-link-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .contact-link-item:hover { background: rgba(255,255,255,0.08); transform: translateX(4px); }
+  .contact-link-icon { font-size: 1.4rem; }
+  .contact-link-info label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.4; margin-bottom: 0.2rem; }
+  .contact-link-info span { font-size: 0.9rem; font-weight: 500; }
+  .contact-link-arrow { margin-left: auto; opacity: 0.4; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--c-border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  footer .container { display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-size: 0.8rem; color: var(--c-muted); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--c-muted); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--c-text); }
+
+  /* ============================================================
+     ANIMATIONS
+     ============================================================ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ============================================================
+     MOBILE NAV
+     ============================================================ */
+  .mobile-nav {
+    display: none;
+    position: fixed; inset: 0; z-index: 99;
+    background: var(--c-bg);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s var(--ease-out);
+  }
+  .mobile-nav.open { transform: translateX(0); }
+  .mobile-nav a { font-family: var(--font-display); font-size: 2rem; }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-portrait { aspect-ratio: 16/9; max-height: 320px; }
+    .project-inner { grid-template-columns: 1fr; }
+    .project-card:nth-child(even) .project-inner { direction: ltr; }
+    .project-visual { min-height: 240px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .section-header { grid-template-columns: 1fr; }
+    .wireframe-grid { grid-template-columns: 1fr 1fr; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .persona-grid { grid-template-columns: 1fr; }
+    .cs-meta-grid { grid-template-columns: 1fr 1fr; }
+    .hero-stats { gap: 2rem; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .mobile-nav { display: flex; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    .wireframe-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .cs-meta-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">UXwithBala<span>.</span></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☀️</button>
+      <a href="#contact" class="nav-cta">Let's Talk →</a>
+    </div>
+    <div style="display:flex;gap:0.75rem;align-items:center;">
+      <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">☀️</button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#projects" onclick="closeMobileNav()">Work</a>
+  <a href="#skills" onclick="closeMobileNav()">Skills</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        <span class="t-label" style="letter-spacing:0.06em;">Available for new opportunities</span>
+      </div>
+      <h1 class="t-hero hero-headline">
+        Designing systems<br>
+        that <em>think</em> clearly.
+      </h1>
+      <p class="t-lead hero-tagline">
+        UX/UI Designer with 6 years of experience crafting data-heavy dashboards, fintech products, and scalable design systems that balance user needs with real business impact.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">
+          View My Work
+          <span>↓</span>
+        </a>
+        <a href="resume.pdf" class="btn-secondary" download>
+          Download CV
+          <span>↗</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">7+</div>
+          <div class="stat-label">Years of experience</div>
+        </div>
+        <div>
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Products shipped</div>
+        </div>
+        <div>
+          <div class="stat-num">4</div>
+          <div class="stat-label">Design systems built</div>
+        </div>
+        <div>
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Happy clients</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-text">
+        <p class="t-label section-label">01 — About</p>
+        <h2 class="t-h1">The designer behind<br>the details.</h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="about-portrait">
+          <div class="portrait-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Your photo here<br><span style="font-size:0.7rem;opacity:0.6;">(Replace with your portrait)</span></span>
+          </div>
+          <div class="about-portrait-badge">
+            <span class="badge-icon">🎯</span>
+            <div class="badge-text">
+              <strong>UX/UI Designer</strong>
+              Based in India
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-body reveal reveal-delay-1">
+        <p class="t-lead">I'm a UX/UI designer focused on creating intuitive, scalable, and impactful digital experiences.</p>
+        <p>With a strong foundation in product thinking, I design solutions that balance user needs with business goals. My work is driven by clarity — breaking down complex problems into simple, usable interfaces.</p>
+        <p>I enjoy working on data-heavy platforms, dashboards, and systems where structure, usability, and decision-making matter the most. From research to final UI, I aim to create experiences that feel effortless, purposeful, and meaningful.</p>
+        <p>I believe great design is not just about how things look, but how they work.</p>
+        <div style="margin-top:2rem;">
+          <p class="t-label" style="margin-bottom:1rem;">Tools & Skills</p>
+          <div class="skills-grid">
+            <div class="skill-chip">Figma</div>
+            <div class="skill-chip">UX Research</div>
+            <div class="skill-chip">Prototyping</div>
+            <div class="skill-chip">Design Systems</div>
+            <div class="skill-chip">Framer</div>
+            <div class="skill-chip">AI Tools</div>
+            <div class="skill-chip">Usability Testing</div>
+            <div class="skill-chip">Wireframing</div>
+            <div class="skill-chip">Data Viz</div>
+            <div class="skill-chip">Interaction Design</div>
+            <div class="skill-chip">IA & Flows</div>
+            <div class="skill-chip">Handoff</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PROJECTS
+══════════════════════════════════════════════ -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-text">
+        <p class="t-label section-label">02 — Featured Work</p>
+        <h2 class="t-h1">Case studies that<br>speak for themselves.</h2>
+      </div>
+      <a href="#projects" class="section-header-link">View all projects →</a>
+    </div>
+
+    <div class="projects-list">
+
+      <!-- PROJECT 1: ESOP Dashboard -->
+      <div class="project-card p-esop reveal" onclick="openModal('esop')">
+        <div class="project-inner">
+          <div class="project-info">
+            <div>
+              <div class="project-meta">
+                <span class="tag">Data Dashboard</span>
+                <span class="tag">Fintech</span>
+                <span class="tag">B2B SaaS</span>
+              </div>
+              <h3 class="t-h2 project-title">ESOP Dashboard</h3>
+              <p class="project-problem">
+                Employees and HR teams struggled to understand complex equity data — vesting schedules, grant history, and tax implications were buried in spreadsheets and disconnected tools.
+              </p>
+              <div class="project-process">
+                <span class="process-step">Research</span>
+                <span class="process-step">Wireframes</span>
+                <span class="process-step">UI Design</span>
+                <span class="process-step">Testing</span>
+              </div>
+            </div>
+            <div>
+              <div class="project-outcome">
+                <div class="outcome-stat">
+                  <div class="num">40%</div>
+                  <div class="desc">Faster data comprehension</div>
+                </div>
+                <div class="outcome-stat">
+                  <div class="num">65%</div>
+                  <div class="desc">Fewer support tickets</div>
+                </div>
+                <div class="outcome-stat">
+                  <div class="num">4.7★</div>
+                  <div class="desc">Avg user satisfaction</div>
+                </div>
+              </div>
+              <button class="project-link-btn">View Case Study →</button>
+            </div>
+          </div>
+          <div class="project-visual">
+            <div class="project-visual-inner">
+              <div class="mockup-screen">
+                <div class="mockup-bar">
+                  <div class="mockup-dot" style="background:#FF5F57;"></div>
+                  <div class="mockup-dot" style="background:#FFBD2E;"></div>
+                  <div class="mockup-dot" style="background:#28CA42;"></div>
+                </div>
+                <div class="mockup-content">
+                  <div class="mockup-row w-60" style="background:#c7d2fe;"></div>
+                  <div class="mockup-chart">
+                    <div class="mockup-chart-bars">
+                      <div class="chart-bar" style="height:45%;background:#818cf8;"></div>
+                      <div class="chart-bar" style="height:70%;background:#6366f1;"></div>
+                      <div class="chart-bar" style="height:55%;background:#818cf8;"></div>
+                      <div class="chart-bar" style="height:90%;background:#4f46e5;"></div>
+                      <div class="chart-bar" style="height:65%;background:#818cf8;"></div>
+                      <div class="chart-bar" style="height:80%;background:#6366f1;"></div>
+                    </div>
+                  </div>
+                  <div class="mockup-grid">
+                    <div class="mockup-card-sm" style="background:#EEF2FF;"></div>
+                    <div class="mockup-card-sm" style="background:#EEF2FF;"></div>
+                    <div class="mockup-card-sm" style="background:#EEF2FF;"></div>
+                    <div class="mockup-card-sm" style="background:#EEF2FF;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2: UPI ATM -->
+      <div class="project-card p-upi reveal" onclick="openModal('upi')">
+        <div class="project-inner">
+          <div class="project-info">
+            <div>
+              <div class="project-meta">
+                <span class="tag">Fintech UX</span>
+                <span class="tag">Mobile</span>
+                <span class="tag">UX Research</span>
+              </div>
+              <h3 class="t-h2 project-title">UPI ATM — Cardless Cash</h3>
+              <p class="project-problem">
+                Millions of users couldn't withdraw cash due to forgotten debit cards. UPI infrastructure existed but there was no intuitive end-to-end mobile experience bridging the gap between app and ATM.
+              </p>
+              <div class="project-process">
+                <span class="process-step">Discovery</span>
+                <span class="process-step">User Research</span>
+                <span class="process-step">Interaction Design</span>
+                <span class="process-step">Validation</span>
+              </div>
+            </div>
+            <div>
+              <div class="project-outcome">
+                <div class="outcome-stat">
+                  <div class="num">3×</div>
+                  <div class="desc">Task completion rate</div>
+                </div>
+                <div class="outcome-stat">
+                  <div class="num">78%</div>
+                  <div class="desc">Error reduction</div>
+                </div>
+                <div class="outcome-stat">
+                  <div class="num">22s</div>
+                  <div class="desc">Avg time-to-cash</div>
+                </div>
+              </div>
+              <button class="project-link-btn">View Case Study →</button>
+            </div>
+          </div>
+          <div class="project-visual">
+            <div class="project-visual-inner" style="justify-content:center;gap:1rem;flex-direction:row;">
+              <div class="mockup-screen" style="max-width:150px;transform:perspective(600px) rotateY(4deg);">
+                <div class="mockup-bar">
+                  <div class="mockup-dot" style="background:#FF5F57;"></div>
+                  <div class="mockup-dot" style="background:#FFBD2E;"></div>
+                  <div class="mockup-dot" style="background:#28CA42;"></div>
+                </div>
+                <div class="mockup-content">
+                  <div style="width:48px;height:48px;background:#FED7AA;border-radius:50%;margin:0 auto 0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">₹</div>
+                  <div class="mockup-row" style="margin:0 auto 6px;width:80%;"></div>
+                  <div class="mockup-row w-60" style="margin:0 auto 12px;"></div>
+                  <div style="height:28px;background:#E8521A;border-radius:100px;margin-top:4px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 3: Schooldex -->
+      <div class="project-card p-school reveal" onclick="openModal('school')">
+        <div class="project-inner">
+          <div class="project-info">
+            <div>
+              <div class="project-meta">
+                <span class="tag">EdTech</span>
+                <span class="tag">SaaS Platform</span>
+                <span class="tag">Design System</span>
+              </div>
+              <h3 class="t-h2 project-title">Schooldex — SIS + LMS Platform</h3>
+              <p class="project-problem">
+                Schools managed student data, attendance, grades, and learning content across 5+ disconnected tools. Teachers spent more time on admin than teaching. A unified platform was needed urgently.
+              </p>
+              <div class="project-process">
+                <span class="process-step">Stakeholder Interviews</span>
+                <span class="process-step">System Mapping</span>
+                <span class="process-step">Design System</span>
+                <span class="process-step">Pilot Testing</span>
+              </div>
+            </div>
+            <div>
+              <div class="project-outcome">
+                <div class="outcome-stat">
+                  <div class="num">60%</div>
+                  <div class="desc">Admin time saved</div>
+                </div>
+                <div class="outcome-stat">
+                  <div class="num">120+</div>
+                  <div class="desc">Components built</div>
+                </div>
+                <div class="outcome-stat">
+                  <div class="num">8</div>
+                  <div class="desc">School pilots launched</div>
+                </div>
+              </div>
+              <button class="project-link-btn">View Case Study →</button>
+            </div>
+          </div>
+          <div class="project-visual">
+            <div class="project-visual-inner">
+              <div class="mockup-screen">
+                <div class="mockup-bar">
+                  <div class="mockup-dot" style="background:#FF5F57;"></div>
+                  <div class="mockup-dot" style="background:#FFBD2E;"></div>
+                  <div class="mockup-dot" style="background:#28CA42;"></div>
+                </div>
+                <div class="mockup-content">
+                  <div class="mockup-row w-80" style="background:#BBF7D0;"></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0;">
+                    <div style="height:52px;background:#DCFCE7;border-radius:6px;"></div>
+                    <div style="height:52px;background:#DCFCE7;border-radius:6px;"></div>
+                  </div>
+                  <div class="mockup-row" style="height:6px;background:#BBF7D0;margin-bottom:6px;"></div>
+                  <div class="mockup-row w-60" style="height:6px;background:#BBF7D0;"></div>
+                  <div style="height:32px;background:#22c55e;border-radius:100px;margin-top:10px;opacity:0.8;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SKILLS
+══════════════════════════════════════════════ -->
+<section id="skills" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-text">
+        <p class="t-label section-label">03 — Skills</p>
+        <h2 class="t-h1">End-to-end design<br>capabilities.</h2>
+      </div>
+    </div>
+    <div class="skills-categories">
+      <div class="skill-category reveal">
+        <div class="skill-category-icon">🔍</div>
+        <div class="skill-category-name">UX Research</div>
+        <div class="skill-items">
+          <div class="skill-item">User Interviews</div>
+          <div class="skill-item">Usability Testing</div>
+          <div class="skill-item">Heuristic Evaluation</div>
+          <div class="skill-item">Affinity Mapping</div>
+          <div class="skill-item">Journey Mapping</div>
+        </div>
+      </div>
+      <div class="skill-category reveal reveal-delay-1">
+        <div class="skill-category-icon">✏️</div>
+        <div class="skill-category-name">Design</div>
+        <div class="skill-items">
+          <div class="skill-item">Wireframing & Flows</div>
+          <div class="skill-item">UI Design</div>
+          <div class="skill-item">Interaction Design</div>
+          <div class="skill-item">Prototyping</div>
+          <div class="skill-item">Responsive Design</div>
+        </div>
+      </div>
+      <div class="skill-category reveal reveal-delay-2">
+        <div class="skill-category-icon">🏗️</div>
+        <div class="skill-category-name">Systems</div>
+        <div class="skill-items">
+          <div class="skill-item">Design Systems</div>
+          <div class="skill-item">Component Libraries</div>
+          <div class="skill-item">Design Tokens</div>
+          <div class="skill-item">Documentation</div>
+          <div class="skill-item">Style Guides</div>
+        </div>
+      </div>
+      <div class="skill-category reveal reveal-delay-3">
+        <div class="skill-category-icon">⚡</div>
+        <div class="skill-category-name">Tools</div>
+        <div class="skill-items">
+          <div class="skill-item">Figma</div>
+          <div class="skill-item">Framer</div>
+          <div class="skill-item">Maze / Hotjar</div>
+          <div class="skill-item">Notion / Jira</div>
+          <div class="skill-item">AI (Midjourney, GPT)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════════ -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="t-label section-label">04 — Contact</p>
+        <h2 class="contact-headline">Let's build something <em>great</em> together.</h2>
+        <p class="contact-sub">Open to senior UX/UI roles, contract projects, and product design consulting. I'm always happy to chat about design challenges.</p>
+        <div class="contact-actions">
+          <a href="mailto:hello@yourname.com" class="btn-light">📬 Send an Email</a>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" class="btn-ghost-light">LinkedIn ↗</a>
+        </div>
+      </div>
+      <div class="contact-links reveal reveal-delay-1">
+        <a href="mailto:hello@yourname.com" class="contact-link-item">
+          <span class="contact-link-icon">📧</span>
+          <div class="contact-link-info">
+            <label>Email</label>
+            <span>hello@yourname.com</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://linkedin.com" target="_blank" class="contact-link-item">
+          <span class="contact-link-icon">💼</span>
+          <div class="contact-link-info">
+            <label>LinkedIn</label>
+            <span>linkedin.com/in/yourprofile</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="#" class="contact-link-item">
+          <span class="contact-link-icon">🎨</span>
+          <div class="contact-link-info">
+            <label>Dribbble</label>
+            <span>dribbble.com/yourprofile</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="#" class="contact-link-item">
+          <span class="contact-link-icon">📄</span>
+          <div class="contact-link-info">
+            <label>Resume</label>
+            <span>Download PDF</span>
+          </div>
+          <span class="contact-link-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <span class="footer-copy">© 2025 Priya — UX/UI Designer</span>
+    <div class="footer-links">
+      <a href="#hero">Top ↑</a>
+      <a href="#projects">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════
+     CASE STUDY MODALS
+══════════════════════════════════════════════ -->
+
+<!-- ESOP Modal -->
+<div class="modal-overlay" id="modal-esop">
+  <div class="modal">
+    <div class="modal-hero" style="background:linear-gradient(135deg,#EDF2FF,#C7D2FE);">
+      <button class="modal-close" onclick="closeModal('esop')">✕</button>
+      <div>
+        <p class="t-label" style="color:#4f46e5;margin-bottom:0.5rem;">Case Study — ESOP Dashboard</p>
+        <h2 class="t-h1" style="color:#1e1b4b;">Making equity<br>understandable.</h2>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="cs-section">
+        <div class="cs-meta-grid">
+          <div class="cs-meta-item"><label>My Role</label><span>Lead Product Designer</span></div>
+          <div class="cs-meta-item"><label>Duration</label><span>4 months</span></div>
+          <div class="cs-meta-item"><label>Platform</label><span>Web App (B2B SaaS)</span></div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Overview</h3>
+        <p>ESOP Dashboard is an equity management platform for startups and HR teams. Employees needed a clear, self-serve way to understand their stock options, vesting schedules, and tax implications — all in one place.</p>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Problem</h3>
+        <p>HR teams were fielding hundreds of repetitive queries about equity every month. Employees couldn't understand their ESOP letters. The existing tool was a glorified spreadsheet with no contextual guidance, resulting in confusion, distrust, and low engagement.</p>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Research Insights</h3>
+        <div class="cs-insight-list">
+          <div class="cs-insight-item">68% of employees didn't know how much their options were currently worth</div>
+          <div class="cs-insight-item">HR teams spent ~6 hrs/week answering equity questions that could be self-served</div>
+          <div class="cs-insight-item">Users needed progressive disclosure — summary first, details on demand</div>
+          <div class="cs-insight-item">Mobile access was critical: employees checked equity data during appraisal periods</div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">User Personas</h3>
+        <div class="persona-grid">
+          <div class="persona-card">
+            <div class="persona-avatar">👩‍💼</div>
+            <div class="persona-name">Shreya, 28</div>
+            <div class="persona-role">Software Engineer, 3 yrs at startup</div>
+            <div class="persona-pain">"I have no idea when my options vest or what they're worth today."</div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-avatar">👨‍💻</div>
+            <div class="persona-role">HR Manager, handles 80+ employees</div>
+            <div class="persona-name">Arjun, 35</div>
+            <div class="persona-pain">"I waste half my day answering questions that should be in a dashboard."</div>
+          </div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Wireframes & Process</h3>
+        <div class="wireframe-grid">
+          <div class="wireframe-ph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg><span>Dashboard Overview Wireframe</span></div>
+          <div class="wireframe-ph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Vesting Timeline View</span></div>
+          <div class="wireframe-ph"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Tax Calculator Modal</span></div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Final UI</h3>
+        <div style="background:var(--c-tag-bg);border:1px dashed var(--c-border);border-radius:var(--radius-md);padding:3rem;text-align:center;color:var(--c-muted);">
+          📸 Insert final UI screens here<br><span style="font-size:0.8rem;">Recommended: 1440px desktop + 375px mobile screenshots</span>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Results</h3>
+        <div class="results-grid">
+          <div class="result-card"><div class="result-num">40%</div><div class="result-label">Faster data comprehension in user testing</div></div>
+          <div class="result-card"><div class="result-num">65%</div><div class="result-label">Reduction in HR support queries</div></div>
+          <div class="result-card"><div class="result-num">4.7★</div><div class="result-label">Average satisfaction score</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPI Modal -->
+<div class="modal-overlay" id="modal-upi">
+  <div class="modal">
+    <div class="modal-hero" style="background:linear-gradient(135deg,#FFF4ED,#FED7AA);">
+      <button class="modal-close" onclick="closeModal('upi')">✕</button>
+      <div>
+        <p class="t-label" style="color:#E8521A;margin-bottom:0.5rem;">Case Study — UPI ATM</p>
+        <h2 class="t-h1" style="color:#431407;">Cash, without the card.</h2>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="cs-section">
+        <div class="cs-meta-grid">
+          <div class="cs-meta-item"><label>My Role</label><span>UX Designer</span></div>
+          <div class="cs-meta-item"><label>Duration</label><span>6 weeks</span></div>
+          <div class="cs-meta-item"><label>Platform</label><span>Mobile App (Android + iOS)</span></div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Overview</h3>
+        <p>UPI ATM enables cardless cash withdrawals by linking a user's UPI ID to a physical ATM interaction. This case study covers the complete flow — from initiating a withdrawal in-app to collecting cash at the ATM.</p>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Problem</h3>
+        <p>Users frequently arrived at ATMs without debit cards — especially younger demographics who rely on UPI for daily transactions. Existing cardless options required bank-specific apps with cumbersome flows that had high drop-off rates.</p>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Research Insights</h3>
+        <div class="cs-insight-list">
+          <div class="cs-insight-item">1 in 3 users had missed a cardless ATM opportunity due to confusing flows</div>
+          <div class="cs-insight-item">Time pressure at ATMs created anxiety — the flow needed to be under 30 seconds</div>
+          <div class="cs-insight-item">OTP-based confirmations were the most trusted security pattern</div>
+          <div class="cs-insight-item">Users expected clear session expiry feedback to avoid failed withdrawals</div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">User Personas</h3>
+        <div class="persona-grid">
+          <div class="persona-card">
+            <div class="persona-avatar">🧑‍🎓</div>
+            <div class="persona-name">Rahul, 22</div>
+            <div class="persona-role">College student, UPI-first user</div>
+            <div class="persona-pain">"I never carry my card but I need cash sometimes — this should just work."</div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-avatar">👩‍🔬</div>
+            <div class="persona-name">Meera, 38</div>
+            <div class="persona-role">Professional, frequent traveller</div>
+            <div class="persona-pain">"I left my wallet at home again — I need a reliable backup."</div>
+          </div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Wireframes & Process</h3>
+        <div class="wireframe-grid">
+          <div class="wireframe-ph"><span>Initiate Flow Screen</span></div>
+          <div class="wireframe-ph"><span>ATM QR Scan State</span></div>
+          <div class="wireframe-ph"><span>OTP + Confirmation</span></div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Final UI</h3>
+        <div style="background:var(--c-tag-bg);border:1px dashed var(--c-border);border-radius:var(--radius-md);padding:3rem;text-align:center;color:var(--c-muted);">
+          📸 Insert final UI screens here<br><span style="font-size:0.8rem;">Recommended: 375px mobile mockups in device frames</span>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Results</h3>
+        <div class="results-grid">
+          <div class="result-card"><div class="result-num">3×</div><div class="result-label">Task completion rate vs. benchmark</div></div>
+          <div class="result-card"><div class="result-num">78%</div><div class="result-label">Reduction in user errors</div></div>
+          <div class="result-card"><div class="result-num">22s</div><div class="result-label">Average time to initiate withdrawal</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Schooldex Modal -->
+<div class="modal-overlay" id="modal-school">
+  <div class="modal">
+    <div class="modal-hero" style="background:linear-gradient(135deg,#EFFAF5,#BBF7D0);">
+      <button class="modal-close" onclick="closeModal('school')">✕</button>
+      <div>
+        <p class="t-label" style="color:#16a34a;margin-bottom:0.5rem;">Case Study — Schooldex</p>
+        <h2 class="t-h1" style="color:#14532d;">One platform for<br>every classroom need.</h2>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="cs-section">
+        <div class="cs-meta-grid">
+          <div class="cs-meta-item"><label>My Role</label><span>Lead UX/UI + Design System</span></div>
+          <div class="cs-meta-item"><label>Duration</label><span>8 months</span></div>
+          <div class="cs-meta-item"><label>Platform</label><span>Web + Tablet (EdTech SaaS)</span></div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Overview</h3>
+        <p>Schooldex is a unified School Information System (SIS) and Learning Management System (LMS). I designed the end-to-end platform from scratch — building the design language, component library, and all major user flows for administrators, teachers, students, and parents.</p>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Problem</h3>
+        <p>Schools operated across fragmented tools — one for attendance, another for grades, a third for curriculum. This created data silos, duplication, and high cognitive load for teachers who managed up to 5 different tools per day.</p>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Research Insights</h3>
+        <div class="cs-insight-list">
+          <div class="cs-insight-item">Teachers averaged 4.8 context switches per hour across disconnected tools</div>
+          <div class="cs-insight-item">Parents wanted real-time updates, not periodic PDF reports</div>
+          <div class="cs-insight-item">A scalable design system was critical to ship fast and stay consistent across 40+ screens</div>
+          <div class="cs-insight-item">Offline mode was essential for schools in low-connectivity regions</div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">User Personas</h3>
+        <div class="persona-grid">
+          <div class="persona-card">
+            <div class="persona-avatar">👩‍🏫</div>
+            <div class="persona-name">Divya, 34</div>
+            <div class="persona-role">Class Teacher, 120 students</div>
+            <div class="persona-pain">"I spend more time on data entry than I do on actual teaching."</div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-avatar">🧑‍💼</div>
+            <div class="persona-name">Suresh, 48</div>
+            <div class="persona-role">School Principal</div>
+            <div class="persona-pain">"I can't get a clear picture of school performance without pulling 5 reports."</div>
+          </div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Wireframes & Process</h3>
+        <div class="wireframe-grid">
+          <div class="wireframe-ph"><span>Teacher Dashboard</span></div>
+          <div class="wireframe-ph"><span>Attendance Module</span></div>
+          <div class="wireframe-ph"><span>Grade Book View</span></div>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Final UI</h3>
+        <div style="background:var(--c-tag-bg);border:1px dashed var(--c-border);border-radius:var(--radius-md);padding:3rem;text-align:center;color:var(--c-muted);">
+          📸 Insert final UI screens here<br><span style="font-size:0.8rem;">Recommended: 1280px web view + key component highlights</span>
+        </div>
+      </div>
+      <div class="cs-section">
+        <h3 class="cs-section-title">Results</h3>
+        <div class="results-grid">
+          <div class="result-card"><div class="result-num">60%</div><div class="result-label">Reduction in admin time for teachers</div></div>
+          <div class="result-card"><div class="result-num">120+</div><div class="result-label">Reusable design system components</div></div>
+          <div class="result-card"><div class="result-num">8</div><div class="result-label">Schools in pilot launch</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════ -->
+<script>
+  // ── Theme Toggle ──
+  const html = document.documentElement;
+  const icons = document.querySelectorAll('.theme-toggle');
+  let dark = false;
+
+  function setTheme(isDark) {
+    dark = isDark;
+    html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    icons.forEach(el => el.textContent = isDark ? '🌙' : '☀️');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  }
+
+  // Load saved
+  if (localStorage.getItem('theme') === 'dark') setTheme(true);
+
+  document.getElementById('themeToggle').addEventListener('click', () => setTheme(!dark));
+  document.getElementById('themeToggleMobile').addEventListener('click', () => setTheme(!dark));
+
+  // ── Mobile Nav ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  let navOpen = false;
+  hamburger.addEventListener('click', () => {
+    navOpen = !navOpen;
+    mobileNav.classList.toggle('open', navOpen);
+    mobileNav.style.display = navOpen ? 'flex' : 'none';
+    // Animate hamburger
+    const spans = hamburger.querySelectorAll('span');
+    if (navOpen) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+  function closeMobileNav() {
+    navOpen = false;
+    mobileNav.classList.remove('open');
+    setTimeout(() => mobileNav.style.display = 'none', 400);
+    const spans = hamburger.querySelectorAll('span');
+    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  }
+
+  // ── Scroll Reveal ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Modal ──
+  function openModal(id) {
+    const el = document.getElementById('modal-' + id);
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    const el = document.getElementById('modal-' + id);
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', e => {
+      if (e.target === el) {
+        el.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(el => {
+        el.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+</script>
+</body>
+</html>
