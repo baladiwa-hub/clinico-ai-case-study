@@ -48,7 +48,22 @@ p{margin:0 0 18px;color:#444}
 .step{padding:13px 16px;background:var(--surface);border:1px solid var(--line);border-radius:8px;font-size:14px}
 .arrow{padding:13px 0;color:var(--muted)}
 .screen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:42px}
-.screen{background:#e8e8e3;border:1px solid var(--line);aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#777;font-size:13px}
+.screen {
+  width: 100%;
+  height: 400px; /* change this to your preferred container height */
+  overflow: hidden;
+  border-radius: 16px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.real-screen {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 .screen small{display:block;margin-top:8px}
 .insight{border-left:2px solid #111;padding-left:22px;margin:32px 0}
 .quote{font-size:30px;line-height:1.15;letter-spacing:-.04em;max-width:850px}
@@ -209,15 +224,15 @@ footer h2{max-width:700px}
       <!-- Replace these blocks with your exported Figma screenshots.
            Example: <img class="real-screen" src="assets/home.png" alt="QuickCash Home"> -->
       <div class="screen-grid">
-        <div class="screen">ADD SCREENSHOT<br><small>Home / Entry</small></div>
-        <div class="screen">ADD SCREENSHOT<br><small>ATM Locator</small></div>
-        <div class="screen">ADD SCREENSHOT<br><small>QR Scanner</small></div>
-        <div class="screen">ADD SCREENSHOT<br><small>Withdraw Amount</small></div>
-        <div class="screen">ADD SCREENSHOT<br><small>UPI PIN</small></div>
-        <div class="screen">ADD SCREENSHOT<br><small>Processing</small></div>
-        <div class="screen">ADD SCREENSHOT<br><small>Success</small></div>
-        <div class="screen">ADD SCREENSHOT<br><small>Failed</small></div>
-        <div class="screen">ADD SCREENSHOT<br><small>Transaction History</small></div>
+        <div><img class="real-screen" src="images/home.jpeg" alt="QuickCash Home"></div>
+        <div ><img class="real-screen" src="images/ATMlocator.jpeg" alt="QuickCash ATM Locator"></div>
+        <div ><img class="real-screen" src="images/QRscanner.jpeg" alt="QuickCash QR Scanner"></div>
+        <div ><img class="real-screen" src="images/enteramount.jpeg" alt="QuickCash Enter Amount"></div>
+        <div ><img class="real-screen" src="images/pin.jpeg" alt="QuickCash UPI PIN"></div>
+        <div ><img class="real-screen" src="images/processing.jpeg" alt="QuickCash Processing"></div>
+        <div ><img class="real-screen" src="images/sucess.jpeg" alt="QuickCash Success"></div>
+        <div ><img class="real-screen" src="images/failed.jpeg" alt="QuickCash Failed"></div>
+        <div ><img class="real-screen" src="images/transactionhistory.jpeg" alt="QuickCash Transaction History"></div>
       </div>
     </div>
   </div>
